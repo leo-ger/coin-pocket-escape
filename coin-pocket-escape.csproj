@@ -45,6 +45,9 @@
         <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
           <HintPath>packages\Microsoft.CodeAnalysis.CSharp.3.3.1\lib\netstandard2.0\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
         </Reference>
+        <Reference Include="Mirror">
+          <HintPath>References\Mirror.dll</HintPath>
+        </Reference>
         <Reference Include="mscorlib" />
         <Reference Include="NwPluginAPI.Analyzers, Version=12.0.0.0, Culture=neutral, processorArchitecture=Amd64">
           <HintPath>packages\Northwood.PluginAPI.Analyzers.12.0.0\lib\netstandard2.0\NwPluginAPI.Analyzers.dll</HintPath>
@@ -104,6 +107,7 @@
     <ItemGroup>
       <Content Include="References\Assembly-CSharp-firstpass.dll" />
       <Content Include="References\Assembly-CSharp.dll" />
+      <Content Include="References\Mirror.dll" />
       <Content Include="References\UnityEngine.CoreModule.dll" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
