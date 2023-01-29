@@ -1,5 +1,6 @@
 ﻿using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
+using PluginAPI.Core.Zones;
 using PluginAPI.Enums;
 using PluginAPI.Core.Zones.Pocket;
 using FacilityZone = MapGeneration.FacilityZone;
@@ -33,14 +34,10 @@ namespace coin_pocket_escape
             { 
                 if (isTails)
                 {
-                    player.RemoveItem(player.CurrentItem.PickupDropModel);
+                    player.Position = SurfaceZone.Rooms[0].Position;
+                    //player.Position = PocketDimension.Logic.PocketDimension.Position;
                 }
-                else
-                {
-                    player.Position = PocketDimension.Logic.PocketDimension.Position;
-                }
-            } 
-            
+            }
         }
     }
 }
