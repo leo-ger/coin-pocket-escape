@@ -1,4 +1,5 @@
-﻿using PluginAPI.Core.Attributes;
+﻿using PluginAPI.Core;
+using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 
 namespace coin_pocket_escape
@@ -18,6 +19,12 @@ namespace coin_pocket_escape
         {
             Singleton = this;
             PluginAPI.Events.EventManager.RegisterEvents(this);
+        }
+        
+        [PluginEvent(ServerEventType.PlayerEnterPocketDimension)]
+        public void OnPlayerEnterPocketDimension(MyPlayer player)
+        {
+            Log.Info($"Player &6{player.Nickname}&r (&6{player.UserId}&r) entered pocked dimension");
         }
     }
 }
