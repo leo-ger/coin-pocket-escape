@@ -1,8 +1,16 @@
-﻿using PluginAPI.Core;
+﻿using System.Security.Policy;
+using FacilitySoundtrack;
+using InventorySystem.Items.Coin;
+using MapGeneration;
+using PlayerRoles.PlayableScps.Scp106;
+using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
+using PluginAPI.Core.Items;
 using PluginAPI.Core.Zones;
+using PluginAPI.Core.Zones.Heavy;
 using PluginAPI.Enums;
 using PluginAPI.Core.Zones.Pocket;
+using UnityEngine;
 using FacilityZone = MapGeneration.FacilityZone;
 
 namespace coin_pocket_escape
@@ -34,8 +42,22 @@ namespace coin_pocket_escape
             { 
                 if (isTails)
                 {
-                    player.Position = SurfaceZone.Rooms[0].Position;
+                    RoomIdentifier room = PluginAPI.Core.Zones.Heavy.Rooms.HczScp049.RoomIdentifier;
+                    for(int i = 0; i < HeavyZone.Rooms.Count; i++)
+                    {
+                        if (HeavyZone.Rooms[i].Identifier == room)
+                        {
+                            Vector3 vector = HeavyZone.Rooms[i].Position;
+                            vector.y += 2;
+                            player.Position = vector;
+                        }
+                    }
                     //player.Position = PocketDimension.Logic.PocketDimension.Position;
+                }
+                else
+                {
+                    Item item = new Item(player.CurrentItem);
+                    player.RemoveItem(item);
                 }
             }
         }
