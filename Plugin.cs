@@ -1,14 +1,8 @@
-﻿using System.Linq;
-using System.Security.Policy;
-using PluginAPI.Core;
+﻿using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
-using PluginAPI.Core.Items;
 using PluginAPI.Enums;
-using PluginAPI.Core.Items;
-using PluginAPI.Core.Zones;
 using PluginAPI.Core.Zones.Pocket;
-using PluginAPI.Core.Zones.Pocket;
-using InventorySystem.Items;
+using FacilityZone = MapGeneration.FacilityZone;
 
 namespace coin_pocket_escape
 {
@@ -35,11 +29,18 @@ namespace coin_pocket_escape
             Log.Info($"&rPlayer &6{player.Nickname}&r (&6{player.UserId}&r) flipped the coin. Flip result: " +
                      $"{(isTails ? "tails" : "heads")}.");
 
-            if (player.Zone == PluginAPI.Core.Zones.UnknownZone); 
-            if (isTails)
-            {
-                player.RemoveItem(player.CurrentItem);
-            }
+            if (player.Zone == FacilityZone.Other)
+            { 
+                if (isTails)
+                {
+                    player.RemoveItem(player.CurrentItem.PickupDropModel);
+                }
+                else
+                {
+                    player.Position = PocketDimension.Logic.PocketDimension.Position;
+                }
+            } 
+            
         }
     }
 }
