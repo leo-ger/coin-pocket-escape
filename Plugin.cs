@@ -1,6 +1,7 @@
 ﻿using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
+using InventorySystem.Items;
 
 namespace coin_pocket_escape
 {
@@ -21,10 +22,16 @@ namespace coin_pocket_escape
             PluginAPI.Events.EventManager.RegisterEvents(this);
         }
         
-        [PluginEvent(ServerEventType.PlayerEnterPocketDimension)]
-        public void OnPlayerEnterPocketDimension(MyPlayer player)
+        [PluginEvent(ServerEventType.PlayerCoinFlip)]
+        public void OnPlayerCoinFlip(MyPlayer player, bool isTails)
         {
-            Log.Info($"Player &6{player.Nickname}&r (&6{player.UserId}&r) entered pocked dimension");
+            Log.Info($"&rPlayer &6{player.Nickname}&r (&6{player.UserId}&r) flipped the coin. Flip result: " +
+                     $"{(isTails ? "tails" : "heads")}.");
+
+            if (isTails)
+            {
+                
+            }
         }
     }
 }
