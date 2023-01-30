@@ -1,15 +1,9 @@
-﻿using System.Security.Policy;
-using FacilitySoundtrack;
-using InventorySystem.Items.Coin;
+﻿
 using MapGeneration;
-using PlayerRoles.PlayableScps.Scp106;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
-using PluginAPI.Core.Items;
 using PluginAPI.Core.Zones;
-using PluginAPI.Core.Zones.Heavy;
 using PluginAPI.Enums;
-using PluginAPI.Core.Zones.Pocket;
 using UnityEngine;
 using FacilityZone = MapGeneration.FacilityZone;
 
@@ -56,8 +50,9 @@ namespace coin_pocket_escape
                 }
                 else
                 {
-                    Item item = new Item(player.CurrentItem);
-                    player.RemoveItem(item);
+                    
+                    player.AddItem(ItemType.Coin); //Leo, es macht alles keine Sinn, Add Item funktioniert
+                    //player.ClearInventory();  das wäre jetzt so meine Idee das Ganze zu lösen
                 }
             }
         }
