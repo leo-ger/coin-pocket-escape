@@ -1,11 +1,15 @@
 ﻿
+using System;
+
 using MapGeneration;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Core.Zones;
+using PluginAPI.Core.Zones.Heavy.Rooms;
 using PluginAPI.Enums;
 using UnityEngine;
 using FacilityZone = MapGeneration.FacilityZone;
+using Random = System.Random;
 
 namespace coin_pocket_escape
 {
@@ -36,16 +40,17 @@ namespace coin_pocket_escape
             { 
                 if (isTails)
                 {
-                    RoomIdentifier room = PluginAPI.Core.Zones.Heavy.Rooms.HczScp049.RoomIdentifier;
-                    for(int i = 0; i < HeavyZone.Rooms.Count; i++)
-                    {
-                        if (HeavyZone.Rooms[i].Identifier == room)
-                        {
+                    //RoomIdentifier room = PluginAPI.Core.Zones.Heavy.Rooms.HczScp049.RoomIdentifier;
+                    //for(int i = 0; i < HeavyZone.Rooms.Count; i++)
+                    int i = new Random().Next(HeavyZone.Rooms.Count);
+                    //{
+                        //if (HeavyZone.Rooms[i].Identifier == room)
+                        //{
                             Vector3 vector = HeavyZone.Rooms[i].Position;
                             vector.y += 2;
                             player.Position = vector;
-                        }
-                    }
+                       // }
+                    //}
                     //player.Position = PocketDimension.Logic.PocketDimension.Position;
                 }
                 else
