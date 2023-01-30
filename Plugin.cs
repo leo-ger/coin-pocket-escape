@@ -42,7 +42,7 @@ namespace coin_pocket_escape
                 {
                     //RoomIdentifier room = PluginAPI.Core.Zones.Heavy.Rooms.HczScp049.RoomIdentifier;
                     //for(int i = 0; i < HeavyZone.Rooms.Count; i++)
-                    int i = new Random().Next(HeavyZone.Rooms.Count);
+                    int i = new Random(player.PlayerId).Next(HeavyZone.Rooms.Count);
                     //{
                         //if (HeavyZone.Rooms[i].Identifier == room)
                         //{
