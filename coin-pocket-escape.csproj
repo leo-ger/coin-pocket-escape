@@ -93,6 +93,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Config.cs" />
+        <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
         <Compile Include="Plugin.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
@@ -104,6 +105,12 @@
       <Analyzer Include="packages\Microsoft.CodeAnalysis.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
     </ItemGroup>
     <ItemGroup>
+      <Content Include="obj\Debug\coin-pocket-escape.csproj.AssemblyReference.cache" />
+      <Content Include="obj\Debug\coin-pocket-escape.csproj.CopyComplete" />
+      <Content Include="obj\Debug\coin-pocket-escape.csproj.CoreCompileInputs.cache" />
+      <Content Include="obj\Debug\coin-pocket-escape.csproj.FileListAbsolute.txt" />
+      <Content Include="obj\Debug\coin_pocket_escape.dll" />
+      <Content Include="obj\Debug\coin_pocket_escape.pdb" />
       <Content Include="References\Assembly-CSharp-firstpass.dll" />
       <Content Include="References\Assembly-CSharp.dll" />
       <Content Include="References\Mirror.dll" />
