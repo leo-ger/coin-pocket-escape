@@ -1,5 +1,4 @@
-﻿
-using MapGeneration;
+﻿using MapGeneration;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Core.Zones;
