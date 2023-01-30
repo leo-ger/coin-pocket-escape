@@ -12,3 +12,6 @@ Place the `coin_pocket_escape.dll` in your plugin folder.
 
 # Configuration
 You can set the time to wait after the coin is flipped (in ms). This lets the coin-flip animation play.
+
+# Contributors 
+Plugin written by [David-Floy](https://github.com/David-Floy), [josqu-john](https://github.com/josqu-john) and [leo-ger](https://github.com/leo-ger).
