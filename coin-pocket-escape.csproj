@@ -11,6 +11,7 @@
         <RootNamespace>coin_pocket_escape</RootNamespace>
         <AssemblyName>coin_pocket_escape</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
