@@ -13,5 +13,7 @@ Place the `coin_pocket_escape.dll` in your plugin folder.
 # Configuration
 You can set the time to wait after the coin is flipped (in ms). This lets the coin-flip animation play.
 
+Also you can set if the result should be randomized. This means that it's randomized if heads or tails gets you out of the pocket dimension.
+
 # Contributors 
 Plugin written by [David-Floy](https://github.com/David-Floy), [josqu-john](https://github.com/josqu-john) and [leo-ger](https://github.com/leo-ger).
