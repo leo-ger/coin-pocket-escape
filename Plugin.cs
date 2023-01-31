@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Interactables.Interobjects;
 using InventorySystem;
 using MapGeneration;
 using PluginAPI.Core;
@@ -18,7 +19,7 @@ namespace coin_pocket_escape
 
         [PluginConfig] public Config Config;
 
-        public const string Version = "1.0.0";
+        public const string Version = "1.0.1";
         
         [PluginPriority(LoadPriority.Highest)]
         [PluginEntryPoint("Coin-Pocket-Escape", Version,
@@ -34,21 +35,24 @@ namespace coin_pocket_escape
         public async void OnPlayerCoinFlip(Player player, bool isTails)
         {
             var playerInPocket = (player.Zone == FacilityZone.Other);
-            
+
             Log.Info($"&rPlayer &6{player.Nickname}&r (&6{player.UserId}&r) flipped the coin. Flip result: " +
                      $"{(isTails ? "tails" : "heads")}. Player is {(playerInPocket ? "in" : "not in")} pocket.");
-
+            
             // If the player is not in the pocket, do nothing
             if (!playerInPocket)
             {
                 return;
             }
             
+            player.ReceiveHint("The coin will decide your fate!", 2F);
+            
             // Wait to let the coin-flip animation play
             await Task.Delay(TimeSpan.FromMilliseconds(Config.WaitingTime));
             
             // If isTails and nuke not detonated, the player gets teleported to heavy zone and the coin gets removed
-            if (isTails && !AlphaWarheadController.Detonated)
+            // Only if the player still has a coin in his hand
+            if (isTails && !AlphaWarheadController.Detonated && player.CurrentItem.ItemTypeId == ItemType.Coin)
             {
                 /*
                  Selecting a room in the HeavyZone to teleport the player.
@@ -61,14 +65,17 @@ namespace coin_pocket_escape
                 }
                 Vector3 vector = HeavyZone.Rooms[i].Position;
                 vector.y += 1;
+                
                 Log.Info($"&rPlayer gets teleported to Room &6{i}&r, Position: &6{vector.x}&r, &6{vector.y}&r, " +
                          $"&6{vector.z}&r.");
                 player.Position = vector;
+                player.ReceiveHint("You were lucky!", 2F);
                 player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
             }
             
             // If isTails and nuke detonated, the player gets teleported to surface zone and the coin gets removed
-            else if (isTails)
+            // Only if the player still has a coin in his hand.
+            else if (isTails && player.CurrentItem.ItemTypeId == ItemType.Coin)
             {
                 int i = new Random().Next(SurfaceZone.Rooms.Count);
                 while (SurfaceZone.Rooms[i].Identifier.Name == RoomName.Unnamed)
@@ -77,16 +84,25 @@ namespace coin_pocket_escape
                 }
                 Vector3 vector = SurfaceZone.Rooms[i].Position;
                 vector.y += 1;
+                
                 Log.Info($"&rPlayer gets teleported to Room &6{i}&r, Position: &6{vector.x}&r, &6{vector.y}&r, " +
                          $"&6{vector.z}&r.");
                 player.Position = vector;
                 player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
             }
             
-            // If the coin is heads, the coin just gets removed and the player stays in the pocket
+            // If the coin is heads, the coin just gets removed and the player stays in the pocket.
+            // Only if the player still has a coin in his hand.
+            else if (player.CurrentItem.ItemTypeId == ItemType.Coin)
+            {
+                player.ReceiveHint("Looks like you didn't have luck.", 1F);
+                player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
+            }
+
+            // If the player doesn't have a coin in his hand anymore, the event is cancelled.
             else
             {
-                player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
+                player.ReceiveHint("Coin flip cancelled!", 1F);
             }
         }
     }
