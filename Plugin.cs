@@ -19,7 +19,7 @@ namespace coin_pocket_escape
 
         [PluginConfig] public Config Config;
 
-        public const string Version = "1.0.1";
+        public const string Version = "1.1.0";
         
         [PluginPriority(LoadPriority.Highest)]
         [PluginEntryPoint("Coin-Pocket-Escape", Version,
@@ -44,6 +44,18 @@ namespace coin_pocket_escape
             {
                 return;
             }
+
+            var success = isTails;
+            
+            // If CoinRandom is enabled, switch up the result randomly
+            if (Config.CoinRandom)
+            {
+                int i = new Random().Next(2);
+                if (i == 1)
+                {
+                    success = !isTails;
+                }
+            }
             
             player.ReceiveHint("The coin will decide your fate!", 2F);
             
@@ -52,41 +64,45 @@ namespace coin_pocket_escape
             
             // If isTails and nuke not detonated, the player gets teleported to heavy zone and the coin gets removed
             // Only if the player still has a coin in his hand
-            if (isTails && !AlphaWarheadController.Detonated && player.CurrentItem.ItemTypeId == ItemType.Coin)
+            if (success && !AlphaWarheadController.Detonated && player.CurrentItem.ItemTypeId == ItemType.Coin)
             {
                 /*
                  Selecting a room in the HeavyZone to teleport the player.
                  To prevent teleports to weird rooms, that are way off the map, only rooms with names are possible.
                 */
                 int i = new Random().Next(HeavyZone.Rooms.Count);
-                while (HeavyZone.Rooms[i].Identifier.Name == RoomName.Unnamed)
+                while (HeavyZone.Rooms[i].Identifier.Name == RoomName.Unnamed || 
+                       HeavyZone.Rooms[i].Identifier.Name == RoomName.HczTesla ||
+                       HeavyZone.Rooms[i].Identifier.Name == RoomName.HczTestroom)
                 {
                     i = new Random().Next(HeavyZone.Rooms.Count);
                 }
                 Vector3 vector = HeavyZone.Rooms[i].Position;
                 vector.y += 1;
                 
-                Log.Info($"&rPlayer gets teleported to Room &6{i}&r, Position: &6{vector.x}&r, &6{vector.y}&r, " +
-                         $"&6{vector.z}&r.");
+                Log.Info($"&rPlayer gets teleported to Room &6{HeavyZone.Rooms[i].Identifier.Name}&r, " +
+                         $"Position: &6{vector.x}&r, &6{vector.y}&r, &6{vector.z}&r.");
                 player.Position = vector;
                 player.ReceiveHint("You were lucky!", 2F);
                 player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
             }
-            
+
             // If isTails and nuke detonated, the player gets teleported to surface zone and the coin gets removed
             // Only if the player still has a coin in his hand.
-            else if (isTails && player.CurrentItem.ItemTypeId == ItemType.Coin)
+            else if (success && player.CurrentItem.ItemTypeId == ItemType.Coin)
             {
                 int i = new Random().Next(SurfaceZone.Rooms.Count);
-                while (SurfaceZone.Rooms[i].Identifier.Name == RoomName.Unnamed)
+                while (SurfaceZone.Rooms[i].Identifier.Name == RoomName.Unnamed ||
+                       HeavyZone.Rooms[i].Identifier.Name == RoomName.HczTesla ||
+                       HeavyZone.Rooms[i].Identifier.Name == RoomName.HczTestroom)
                 {
                     i = new Random().Next(SurfaceZone.Rooms.Count);
                 }
                 Vector3 vector = SurfaceZone.Rooms[i].Position;
                 vector.y += 1;
                 
-                Log.Info($"&rPlayer gets teleported to Room &6{i}&r, Position: &6{vector.x}&r, &6{vector.y}&r, " +
-                         $"&6{vector.z}&r.");
+                Log.Info($"&rPlayer gets teleported to Room &6{HeavyZone.Rooms[i].Identifier.Name}&r, " +
+                         $"Position: &6{vector.x}&r, &6{vector.y}&r, &6{vector.z}&r.");
                 player.Position = vector;
                 player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
             }
