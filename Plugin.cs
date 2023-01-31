@@ -35,7 +35,7 @@ namespace coin_pocket_escape
         {
             var playerInPocket = (player.Zone == FacilityZone.Other);
             // TODO: tried to save the ItemSerial here and remove it later, didn't solve the issue
-            var item = player.CurrentItem.ItemSerial;
+            //var item = player.CurrentItem.ItemSerial;
             
             Log.Info($"&rPlayer &6{player.Nickname}&r (&6{player.UserId}&r) flipped the coin. Flip result: " +
                      $"{(isTails ? "tails" : "heads")}. Player is {(playerInPocket ? "in" : "not in")} pocket.");
@@ -50,7 +50,7 @@ namespace coin_pocket_escape
             await Task.Delay(TimeSpan.FromMilliseconds(Config.WaitingTime));
             
             // If isTails and nuke not detonated, the player gets teleported to heavy zone and the coin gets removed
-            if (isTails && !AlphaWarheadController.Detonated)
+            if (isTails && !AlphaWarheadController.Detonated && player.CurrentItem.ItemTypeId == ItemType.Coin) //Test: looks if player has ItemTyp Coin in hand
             {
                 /*
                  Selecting a room in the HeavyZone to teleport the player.
@@ -66,11 +66,11 @@ namespace coin_pocket_escape
                 Log.Info($"&rPlayer gets teleported to Room &6{i}&r, Position: &6{vector.x}&r, &6{vector.y}&r, " +
                          $"&6{vector.z}&r.");
                 player.Position = vector;
-                player.ReferenceHub.inventory.ServerRemoveItem(item, null);
+                player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
             }
             
             // If isTails and nuke detonated, the player gets teleported to surface zone and the coin gets removed
-            else if (isTails)
+            else if (isTails && player.CurrentItem.ItemTypeId == ItemType.Coin) //Test: looks if player has ItemTyp Coin in hand
             {
                 int i = new Random().Next(SurfaceZone.Rooms.Count);
                 while (SurfaceZone.Rooms[i].Identifier.Name == RoomName.Unnamed)
@@ -82,13 +82,13 @@ namespace coin_pocket_escape
                 Log.Info($"&rPlayer gets teleported to Room &6{i}&r, Position: &6{vector.x}&r, &6{vector.y}&r, " +
                          $"&6{vector.z}&r.");
                 player.Position = vector;
-                player.ReferenceHub.inventory.ServerRemoveItem(item, null);
+                player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
             }
             
             // If the coin is heads, the coin just gets removed and the player stays in the pocket
             else
             {
-                player.ReferenceHub.inventory.ServerRemoveItem(item, null);
+                player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
             }
         }
     }
