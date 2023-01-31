@@ -45,7 +45,7 @@ namespace coin_pocket_escape
                 return;
             }
 
-            bool success = isTails;
+            var success = isTails;
             
             // If CoinRandom is enabled, switch up the result randomly
             if (Config.CoinRandom)
