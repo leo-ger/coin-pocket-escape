@@ -19,7 +19,7 @@ namespace coin_pocket_escape
 
         [PluginConfig] public Config Config;
 
-        public const string Version = "1.0.1";
+        public const string Version = "1.1.0";
         
         [PluginPriority(LoadPriority.Highest)]
         [PluginEntryPoint("Coin-Pocket-Escape", Version,
