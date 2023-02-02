@@ -3,7 +3,7 @@ A plugin using the NwPluginAPI that enables you to flip a coin to escape the poc
 
 # Information
 Gives players a possibility to flip a coin in the pocket dimension to get out of it.
-Tails teleports the player to a room in the Heavy Containment Zone and deletes the coin, heads just deletes the coin.
+One side teleports the player to a room in the Heavy Containment Zone and deletes the coin, the other side just deletes the coin.
 
 # Installation
 Place the `coin_pocket_escape.dll` in your plugin folder.
