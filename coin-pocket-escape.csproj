@@ -115,6 +115,7 @@
       <Content Include="References\Assembly-CSharp-firstpass.dll" />
       <Content Include="References\Assembly-CSharp.dll" />
       <Content Include="References\Mirror.dll" />
+      <Content Include="References\mscorlib.dll" />
       <Content Include="References\UnityEngine.CoreModule.dll" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

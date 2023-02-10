@@ -1,14 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Interactables.Interobjects;
 using InventorySystem;
 using MapGeneration;
+using MapGeneration.Distributors;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Core.Zones;
 using PluginAPI.Enums;
 using UnityEngine;
+using System.Collections.Generic;
+using CommandSystem.Commands.RemoteAdmin.Cleanup;
+using InventorySystem.Items;
+using InventorySystem.Items.Coin;
+using InventorySystem.Items.Keycards;
+using InventorySystem.Items.Radio;
+using PluginAPI.Core.Items;
+using RelativePositioning;
 using FacilityZone = MapGeneration.FacilityZone;
+using Object = UnityEngine.Object;
 using Random = System.Random;
 
 namespace coin_pocket_escape
@@ -34,11 +45,21 @@ namespace coin_pocket_escape
         [PluginEvent(ServerEventType.PlayerCoinFlip)]
         public async void OnPlayerCoinFlip(Player player, bool isTails)
         {
+            var spawnp = Object.FindObjectsOfType<LockerChamber>();
+            var locklenght = Object.FindObjectsOfType<Locker>().Length;
+            for (int i = 0; i < locklenght; i++)
+            {
+                int j = new Random().Next(locklenght);
+                Vector3 lockerposi = spawnp[j].transform.position;
+                ItemPickup coin = ItemPickup.Create(ItemType.Coin,lockerposi , Quaternion.identity);
+                coin.Spawn();
+                
+                Log.Info($"&rLocker: &6{Object.FindObjectsOfType<Locker>()[i].transform.position}&r");
+            }
+            
             var playerInPocket = (player.Zone == FacilityZone.Other);
-
             Log.Info($"&rPlayer &6{player.Nickname}&r (&6{player.UserId}&r) flipped the coin. Flip result: " +
                      $"{(isTails ? "tails" : "heads")}. Player is {(playerInPocket ? "in" : "not in")} pocket.");
-            
             // If the player is not in the pocket, do nothing
             if (!playerInPocket)
             {
