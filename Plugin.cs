@@ -32,26 +32,24 @@ namespace coin_pocket_escape
             Singleton = this;
             PluginAPI.Events.EventManager.RegisterEvents(this);
         }
-
         
         [PluginEvent(ServerEventType.RoundStart)]
-        private void OnRoundStart()
+        public void OnRoundStart()
         {
             if (Config.ForcedCoins)
             {
-                Random j = new Random();
-                var chamberlenght = Object.FindObjectsOfType<LockerChamber>().Length;
-                var spawnp = Object.FindObjectsOfType<LockerChamber>();
+                Random rand = new Random();
+                var chamberLenght = Object.FindObjectsOfType<LockerChamber>().Length;
+                var spawnPosition = Object.FindObjectsOfType<LockerChamber>();
                 for (int i = 0; i < Config.ForcedCoinsNumber; i++)
                 {
-                    int zwisch = j.Next(chamberlenght);
-                    Vector3 lockerposi = spawnp[zwisch].transform.position;
+                    int temp = rand.Next(chamberLenght);
+                    Vector3 lockerPosition = spawnPosition[temp].transform.position;
                     //Creates the ItemPickup and Spawns the Coin in a random Locker Chamber
-                    ItemPickup coin = ItemPickup.Create(ItemType.Coin, lockerposi, Quaternion.identity);
+                    ItemPickup coin = ItemPickup.Create(ItemType.Coin, lockerPosition, Quaternion.identity);
                     coin.Spawn();
-                    Log.Info($"&rLocker position: &6{spawnp[zwisch].transform.position}&r");
+                    Log.Info($"&rLocker position: &6{spawnPosition[temp].transform.position}&r");
                 }
-
                 Log.Info($"&rAll coins spawned&r");
             }
         }
