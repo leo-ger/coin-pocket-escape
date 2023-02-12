@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Interactables.Interobjects;
 using InventorySystem;
 using MapGeneration;
+using MapGeneration.Distributors;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Core.Zones;
 using PluginAPI.Enums;
 using UnityEngine;
+using PluginAPI.Core.Items;
 using FacilityZone = MapGeneration.FacilityZone;
+using Object = UnityEngine.Object;
 using Random = System.Random;
 
 namespace coin_pocket_escape
@@ -19,7 +21,7 @@ namespace coin_pocket_escape
 
         [PluginConfig] public Config Config;
 
-        public const string Version = "1.1.0";
+        public const string Version = "1.2.0";
         
         [PluginPriority(LoadPriority.Highest)]
         [PluginEntryPoint("Coin-Pocket-Escape", Version,
@@ -31,14 +33,35 @@ namespace coin_pocket_escape
             PluginAPI.Events.EventManager.RegisterEvents(this);
         }
         
+        [PluginEvent(ServerEventType.RoundStart)]
+        public void OnRoundStart()
+        {
+            if (Config.ForcedCoins)
+            {
+                Random rand = new Random();
+                var chamberLenght = Object.FindObjectsOfType<LockerChamber>().Length;
+                var spawnPosition = Object.FindObjectsOfType<LockerChamber>();
+                for (int i = 0; i < Config.ForcedCoinsNumber; i++)
+                {
+                    int temp = rand.Next(chamberLenght);
+                    Vector3 lockerPosition = spawnPosition[temp].transform.position;
+                    //Creates the ItemPickup and Spawns the Coin in a random Locker Chamber
+                    ItemPickup coin = ItemPickup.Create(ItemType.Coin, lockerPosition, Quaternion.identity);
+                    coin.Spawn();
+                    Log.Info($"&rLocker position: &6{spawnPosition[temp].transform.position}&r");
+                }
+                Log.Info($"&rAll coins spawned&r");
+            }
+        }
+            
+        
         [PluginEvent(ServerEventType.PlayerCoinFlip)]
         public async void OnPlayerCoinFlip(Player player, bool isTails)
         {
+            
             var playerInPocket = (player.Zone == FacilityZone.Other);
-
             Log.Info($"&rPlayer &6{player.Nickname}&r (&6{player.UserId}&r) flipped the coin. Flip result: " +
                      $"{(isTails ? "tails" : "heads")}. Player is {(playerInPocket ? "in" : "not in")} pocket.");
-            
             // If the player is not in the pocket, do nothing
             if (!playerInPocket)
             {
