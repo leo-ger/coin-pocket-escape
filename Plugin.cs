@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using InventorySystem;
 using MapGeneration;
 using MapGeneration.Distributors;
+using PlayerRoles;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Core.Zones;
@@ -21,7 +22,7 @@ namespace coin_pocket_escape
 
         [PluginConfig] public Config Config;
 
-        public const string Version = "1.2.0";
+        public const string Version = "1.3.0";
         
         [PluginPriority(LoadPriority.Highest)]
         [PluginEntryPoint("Coin-Pocket-Escape", Version,
@@ -52,9 +53,26 @@ namespace coin_pocket_escape
                 }
                 Log.Info($"&rAll coins spawned&r");
             }
+         
         }
-            
         
+//Sends an Hint to player of SCP-106
+        private static void HintToOldMen(Player tempPlayer)     
+        {
+            for (int i = 0; i <= Player.GetPlayers().Count; i++)                        
+            {
+                //Checks who is Scp-106
+                if (Player.GetPlayers()[i].Role == RoleTypeId.Scp106)  
+                {
+                    //The Hint itself
+                    Player.GetPlayers()[i].ReceiveHint($"{tempPlayer.Nickname} slipped out of dimension!", 6F);
+                    Log.Info($"&r Hint send to: &6{Player.GetPlayers()[i].Nickname}&r");    //debug may be removed!
+                }
+                Log.Info($"&r Hint cold not be send to: &6{Player.GetPlayers()[i].Nickname}&r");    //debug may be removed!
+
+            }
+        }
+
         [PluginEvent(ServerEventType.PlayerCoinFlip)]
         public async void OnPlayerCoinFlip(Player player, bool isTails)
         {
@@ -102,12 +120,12 @@ namespace coin_pocket_escape
                 }
                 Vector3 vector = HeavyZone.Rooms[i].Position;
                 vector.y += 1;
-                
                 Log.Info($"&rPlayer gets teleported to Room &6{HeavyZone.Rooms[i].Identifier.Name}&r, " +
                          $"Position: &6{vector.x}&r, &6{vector.y}&r, &6{vector.z}&r.");
                 player.Position = vector;
                 player.ReceiveHint("You were lucky!", 2F);
                 player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
+                HintToOldMen(player);
             }
 
             // If isTails and nuke detonated, the player gets teleported to surface zone and the coin gets removed
@@ -127,7 +145,9 @@ namespace coin_pocket_escape
                 Log.Info($"&rPlayer gets teleported to Room &6{HeavyZone.Rooms[i].Identifier.Name}&r, " +
                          $"Position: &6{vector.x}&r, &6{vector.y}&r, &6{vector.z}&r.");
                 player.Position = vector;
+                player.ReceiveHint("You were lucky!", 2F);
                 player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, null);
+                HintToOldMen(player);
             }
             
             // If the coin is heads, the coin just gets removed and the player stays in the pocket.
