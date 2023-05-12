@@ -28,7 +28,7 @@ Place the `coin_pocket_escape.dll` in your plugin folder.
 # Configuration
 You can set the time to wait after the coin is flipped (in ms). This lets the coin-flip animation play.
 
-You can set if additionall coins should spwan.
+You can set if additionall coins should spawn.
 
 you can set the amount of additionall coins.
 
