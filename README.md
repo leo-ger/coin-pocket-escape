@@ -17,6 +17,8 @@ It is still possible to escape the pocket dim the normal way.
 
 ![SCP_SL_Coin_Spawn_4](https://github.com/leo-ger/coin-pocket-escape/assets/123889521/d59d0de4-6c0d-4e47-afd4-9663f3f040fe)
 
+![SCP_SL_Coin_Spawn_6](https://github.com/leo-ger/coin-pocket-escape/assets/123889521/c7264108-7a6b-41c1-b8df-830aa29cf88f)
+
 
 # Installation
 Place the `coin_pocket_escape.dll` in your plugin folder.
