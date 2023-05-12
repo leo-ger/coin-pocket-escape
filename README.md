@@ -10,7 +10,7 @@ If it was not successful, the coin is simply deleted.
 At the beginning of the round, additional coins will spawn in lockers all over the map.
 It is still possible to escape the pocket dim the normal way.
 
-#Spawn locations for the Coins
+# Spawn locations for the Coins
 ![SCP_SL_Coin_Spawn_1](https://github.com/leo-ger/coin-pocket-escape/assets/123889521/86b0afbe-eb27-4cca-9cd5-06175e4f9766)
 
 ![SCP_SL_Coin_Spawn_2](https://github.com/leo-ger/coin-pocket-escape/assets/123889521/ffb97bbc-98ce-49ae-b407-a1ae0961e5da)
