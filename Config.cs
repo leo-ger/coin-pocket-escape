@@ -4,7 +4,7 @@ namespace coin_pocket_escape
 {
     public class Config
     {
-        [Description("Toggle forced coin spawns in the beginning of the Round")]
+        [Description("Toggle forced coin spawns in the beginning of the round")]
         public bool ForcedCoins { get; set; } = true;
         
         [Description("Changes the number of coins that will spawn at the beginning of the match")]

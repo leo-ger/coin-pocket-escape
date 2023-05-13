@@ -55,8 +55,8 @@ namespace coin_pocket_escape
             }
          
         }
-        
-//Sends an Hint to player of SCP-106
+
+        //Sends an hint to player of SCP-106
         private static void HintToOldMen(Player tempPlayer)     
         {
             for (int i = 0; i <= Player.GetPlayers().Count; i++)                        
